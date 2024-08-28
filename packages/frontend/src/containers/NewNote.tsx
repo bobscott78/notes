@@ -4,7 +4,10 @@ import Stack from "react-bootstrap/Stack";
 import {useNavigate} from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
+import { NoteType } from "../types/note";
+import { API } from "aws-amplify";
 import "./NewNote.css";
+import { onError } from "../lib/errorLib";
 
 export default function NewNote() {
   const file = useRef<null | File>(null);
@@ -21,9 +24,15 @@ export default function NewNote() {
     file.current = event.currentTarget.files[0];
   }
 
+  function createNote(note: NoteType) {
+    return API.post("notes", "/notes", {
+      body: note,
+    });
+  }
+  
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
+  
     if (file.current && file.current.size > config.MAX_ATTACHMENT_SIZE) {
       alert(
         `Please pick a file smaller than ${
@@ -32,8 +41,16 @@ export default function NewNote() {
       );
       return;
     }
-
+  
     setIsLoading(true);
+  
+    try {
+      await createNote({ content });
+      nav("/");
+    } catch (e) {
+      onError(e);
+      setIsLoading(false);
+    }
   }
 
   return (
