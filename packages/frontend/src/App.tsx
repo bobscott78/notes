@@ -28,10 +28,12 @@ function App() {
     setIsAuthenticating(false);
   }
 
-  function handleLogout() {
+  async function handleLogout() {
+    await Auth.signOut();
+  
     userHasAuthenticated(false);
   }
-
+  
   return (
     !isAuthenticating && (
       <div className="App container py-3">
