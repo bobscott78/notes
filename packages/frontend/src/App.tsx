@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { useNavigate } from "react-router-dom";
 import "./App.css";
+import { onError } from "./lib/errorLib";
 
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
@@ -23,7 +24,7 @@ function App() {
       userHasAuthenticated(true);
     } catch (e) {
       if (e !== "No current user") {
-        alert(e);
+        onError(e);
       }
     }
   
