@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
-import AuthenticatedRoute from "./containers/AuthenticatedRoute";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
 import NewNote from "./containers/NewNote";
