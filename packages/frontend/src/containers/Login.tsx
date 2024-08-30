@@ -4,7 +4,6 @@ import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import LoaderButton from "../components/LoaderButton.tsx";
 import { useAppContext } from "../lib/contextLib";
-import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { onError } from "../lib/errorLib";
 import { useFormFields } from "../lib/hooksLib";
@@ -15,7 +14,6 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const nav = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
@@ -30,7 +28,6 @@ export default function Login() {
     try {
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
-      nav("/");
     } catch (error) {
       onError(error);
       setIsLoading(false);
